@@ -1,0 +1,70 @@
+var score, Health;
+
+function checkInGame() {
+    if (Health <= 0) {
+        Hatch.playSound('Game over');
+        window.openGameOverModal();
+        gameOver();
+    }
+}
+
+1;
+
+function onGreenPlayButtonClicked() {
+    Hatch.setBackgroundSound('Mario theme1');
+    score = 0;
+    Health = 100;
+    MinecraftAvatar.setMinecraftTexture('The Flash');
+    Ocean.setColor('#cc0000');
+    GradientSky.setSolidColor('#ffff00');
+    MazeTerrain.setMazeTexture('Ice');
+}
+
+MinecraftAvatar.detectCollisionsWith([Diamonds], function() {
+    Hatch.playSound('Diamond collect');
+});
+
+MinecraftAvatar.detectCollisionsWith([Coins], function() {
+    Hatch.playSound('Coin collect');
+});
+
+MinecraftAvatar.detectCollisionsWith([Enemies], function() {
+    Hatch.playSound('Hits enemy');
+    Health = Health + 25;
+});
+
+Hatch.onKeyDown(function(event) {
+    if (event.code === 'Space') {
+        Player.jump();
+    }
+});
+
+Hatch.onKeyDown(function(event) {
+    if (event.code === 'ArrowDown' || event.code === 'KeyS') {
+        Player.walkBackward();
+    }
+});
+
+Hatch.onKeyDown(function(event) {
+    if (event.code === 'ArrowLeft' || event.code === 'KeyA') {
+        Player.turnLeft();
+    }
+});
+
+MinecraftAvatar.detectCollisionsWith([Ocean], function() {
+    Hatch.playSound('Game over');
+    window.openGameOverModal();
+    gameOver();
+});
+
+Hatch.onKeyDown(function(event) {
+    if (event.code === 'ArrowRight' || event.code === 'KeyD') {
+        Player.turnRight();
+    }
+});
+
+Hatch.onKeyDown(function(event) {
+    if (event.code === 'ArrowUp' || event.code === 'KeyW') {
+        Player.walkForward();
+    }
+});
